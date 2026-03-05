@@ -13,18 +13,18 @@ As a user I want to see all my tasks so that I can get an overview of everything
 - [x] AC5: Loading indicator shown while fetching
 
 ### Unit Tests
-- [ ] AC6: TaskServiceTest - getAllTasks returns full list
-- [ ] AC7: TaskServiceTest - getAllTasks returns empty list
+- [x] AC6: TaskServiceTest - getAllTasks returns full list
+- [x] AC7: TaskServiceTest - getAllTasks returns empty list
 
 ### Selenium Tests
-- [ ] AC8: Selenium verifies task list loads when app opens
-- [ ] AC9: Selenium verifies empty state shown when no tasks exist
+- [x] AC8: Selenium verifies task list loads when app opens
+- [x] AC9: Selenium verifies empty state shown when no tasks exist
 
 ## Definition of Done
 - [x] Code written and working
 - [x] Manually verified in UI
-- [ ] Unit tests written and passing
-- [ ] Selenium tests written and passing
-- [ ] Committed and pushed to GitHub
+- [x] Unit tests written and passing
+- [x] Selenium tests written and passing
+- [x] Committed and pushed to GitHub
 
-## Status: In Progress
+## Status: Done

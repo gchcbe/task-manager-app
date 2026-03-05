@@ -14,19 +14,19 @@ As a user I want to filter tasks by status so that I can focus on relevant tasks
 - [x] AC6: Counts update immediately after task changes
 
 ### Unit Tests
-- [ ] AC7: TaskServiceTest - getTasksByStatus returns only matching tasks
-- [ ] AC8: TaskServiceTest - getTasksByStatus returns empty list when no matches
+- [x] AC7: TaskServiceTest - getTasksByStatus returns only matching tasks
+- [x] AC8: TaskServiceTest - getTasksByStatus returns empty list when no matches
 
 ### Selenium Tests
-- [ ] AC9: Selenium clicks To Do filter, verifies only TODO tasks shown
-- [ ] AC10: Selenium clicks Done filter, verifies only DONE tasks shown
-- [ ] AC11: Selenium clicks All Tasks, verifies all tasks shown
+- [x] AC9: Selenium clicks To Do filter, verifies only TODO tasks shown
+- [x] AC10: Selenium clicks Done filter, verifies only DONE tasks shown
+- [x] AC11: Selenium clicks All Tasks, verifies all tasks shown
 
 ## Definition of Done
 - [x] Code written and working
 - [x] Manually verified in UI
-- [ ] Unit tests written and passing
-- [ ] Selenium tests written and passing
-- [ ] Committed and pushed to GitHub
+- [x] Unit tests written and passing
+- [x] Selenium tests written and passing
+- [x] Committed and pushed to GitHub
 
-## Status: In Progress
+## Status: Done

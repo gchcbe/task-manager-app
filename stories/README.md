@@ -17,8 +17,8 @@ A story is only marked Done when ALL of the following are true:
 
 | ID | Title | Code | Unit Tests | Selenium | Status |
 |---|---|---|---|---|---|
-| US-001 | View All Tasks | Done | Pending | Pending | In Progress |
-| US-002 | Create a Task | Done | Pending | Pending | In Progress |
-| US-003 | Edit a Task | Done | Pending | Pending | In Progress |
-| US-004 | Delete a Task | Done | Pending | Pending | In Progress |
-| US-005 | Filter Tasks by Status | Done | Pending | Pending | In Progress |
+| US-001 | View All Tasks | Done | Done | Done | Done |
+| US-002 | Create a Task | Done | Done | Done | Done |
+| US-003 | Edit a Task | Done | Done | Done | Done |
+| US-004 | Delete a Task | Done | Done | Done | Done |
+| US-005 | Filter Tasks by Status | Done | Done | Done | Done |

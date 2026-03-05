@@ -14,19 +14,19 @@ As a user I want to create a new task so that I can track things I need to do.
 - [x] AC6: Validation error shown if title is empty
 
 ### Unit Tests
-- [ ] AC7: TaskServiceTest - createTask saves and returns task
-- [ ] AC8: TaskServiceTest - createTask with missing title throws exception
+- [x] AC7: TaskServiceTest - createTask saves and returns task
+- [x] AC8: TaskServiceTest - createTask with missing title throws exception
 
 ### Selenium Tests
-- [ ] AC9: Selenium fills form and submits, verifies task appears in list
-- [ ] AC10: Selenium verifies validation error shown when title is empty
-- [ ] AC11: Selenium verifies cancelling form makes no changes
+- [x] AC9: Selenium fills form and submits, verifies task appears in list
+- [x] AC10: Selenium verifies validation error shown when title is empty
+- [x] AC11: Selenium verifies cancelling form makes no changes
 
 ## Definition of Done
 - [x] Code written and working
 - [x] Manually verified in UI
-- [ ] Unit tests written and passing
-- [ ] Selenium tests written and passing
-- [ ] Committed and pushed to GitHub
+- [x] Unit tests written and passing
+- [x] Selenium tests written and passing
+- [x] Committed and pushed to GitHub
 
-## Status: In Progress
+## Status: Done

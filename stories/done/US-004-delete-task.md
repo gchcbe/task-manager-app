@@ -12,18 +12,18 @@ As a user I want to delete a task so that my list stays clean and relevant.
 - [x] AC4: Cancelling leaves task unchanged
 
 ### Unit Tests
-- [ ] AC5: TaskServiceTest - deleteTask calls deleteById once
-- [ ] AC6: TaskServiceTest - deleteTask with invalid ID throws exception
+- [x] AC5: TaskServiceTest - deleteTask calls deleteById once
+- [x] AC6: TaskServiceTest - deleteTask with invalid ID throws exception
 
 ### Selenium Tests
-- [ ] AC7: Selenium clicks Delete, confirms, verifies task is removed
-- [ ] AC8: Selenium clicks Delete, cancels, verifies task remains
+- [x] AC7: Selenium clicks Delete, confirms, verifies task is removed
+- [x] AC8: Selenium clicks Delete, cancels, verifies task remains
 
 ## Definition of Done
 - [x] Code written and working
 - [x] Manually verified in UI
-- [ ] Unit tests written and passing
-- [ ] Selenium tests written and passing
-- [ ] Committed and pushed to GitHub
+- [x] Unit tests written and passing
+- [x] Selenium tests written and passing
+- [x] Committed and pushed to GitHub
 
-## Status: In Progress
+## Status: Done

@@ -13,18 +13,18 @@ As a user I want to edit an existing task so that I can update its details or st
 - [x] AC5: Updated task reflected immediately in list
 
 ### Unit Tests
-- [ ] AC6: TaskServiceTest - updateTask updates fields and returns saved task
-- [ ] AC7: TaskServiceTest - updateTask with invalid ID throws exception
+- [x] AC6: TaskServiceTest - updateTask updates fields and returns saved task
+- [x] AC7: TaskServiceTest - updateTask with invalid ID throws exception
 
 ### Selenium Tests
-- [ ] AC8: Selenium clicks Edit, changes title, saves, verifies update in list
-- [ ] AC9: Selenium verifies cancelling edit makes no changes
+- [x] AC8: Selenium clicks Edit, changes title, saves, verifies update in list
+- [x] AC9: Selenium verifies cancelling edit makes no changes
 
 ## Definition of Done
 - [x] Code written and working
 - [x] Manually verified in UI
-- [ ] Unit tests written and passing
-- [ ] Selenium tests written and passing
-- [ ] Committed and pushed to GitHub
+- [x] Unit tests written and passing
+- [x] Selenium tests written and passing
+- [x] Committed and pushed to GitHub
 
-## Status: In Progress
+## Status: Done

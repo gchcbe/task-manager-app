@@ -1,9 +1,13 @@
 package com.taskmanager.taskmanager.service;
 
 import com.taskmanager.taskmanager.model.Task;
+import com.taskmanager.taskmanager.model.TaskSummary;
 import com.taskmanager.taskmanager.repository.TaskRepository;
 import org.springframework.stereotype.Service;
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class TaskService {
@@ -43,5 +47,30 @@ public class TaskService {
 
     public List<Task> getTasksByStatus(Task.TaskStatus status) {
         return taskRepository.findByStatus(status);
+    }
+
+    public List<Task> getOverdueTasks() {
+        return taskRepository.findByDueDateBeforeAndStatusNot(
+                LocalDate.now(), Task.TaskStatus.DONE);
+    }
+
+    public Map<String, Long> getTaskCountByStatus() {
+        return taskRepository.findAll().stream()
+                .collect(Collectors.groupingBy(
+                        t -> t.getStatus().name(), Collectors.counting()));
+    }
+
+    public Map<String, Long> getTaskCountByPriority() {
+        return taskRepository.findAll().stream()
+                .collect(Collectors.groupingBy(
+                        t -> t.getPriority().name(), Collectors.counting()));
+    }
+
+    public TaskSummary getTaskSummary() {
+        long total = taskRepository.count();
+        Map<String, Long> byStatus = getTaskCountByStatus();
+        Map<String, Long> byPriority = getTaskCountByPriority();
+        long overdue = getOverdueTasks().size();
+        return new TaskSummary(total, byStatus, byPriority, overdue);
     }
 }

@@ -97,3 +97,118 @@ body {
   color: #276749;
   border: 1px solid #68d391;
 }
+
+/* ── Header Nav ── */
+.header-nav {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-nav {
+  background-color: rgba(255, 255, 255, 0.15);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.btn-nav:hover {
+  background-color: rgba(255, 255, 255, 0.25);
+  transform: translateY(-1px);
+}
+
+.btn-nav-active {
+  background-color: white;
+  color: #1a3a6b;
+  font-weight: 700;
+}
+
+.btn-nav-active:hover {
+  background-color: #f0f2f5;
+  color: #1a3a6b;
+}
+
+/* ── Dashboard ── */
+.dashboard {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.dashboard-section-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #555;
+  margin-top: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.dashboard-section {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.dashboard-tile {
+  flex: 1;
+  min-width: 140px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 16px;
+  border-radius: 10px;
+  background: white;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+  gap: 6px;
+}
+
+.tile-clickable {
+  cursor: pointer;
+  border: none;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.tile-clickable:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+}
+
+.tile-count {
+  font-size: 2.4rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.tile-label {
+  font-size: 0.85rem;
+  color: #666;
+  font-weight: 500;
+  text-align: center;
+}
+
+.tile-total   { border-left: 4px solid #2e5fa3; }
+.tile-overdue { border-left: 4px solid #e53e3e; }
+.tile-total   .tile-count { color: #2e5fa3; }
+.tile-overdue .tile-count { color: #e53e3e; }
+
+.tile-todo        { border-left: 4px solid #718096; }
+.tile-in-progress { border-left: 4px solid #d69e2e; }
+.tile-done        { border-left: 4px solid #38a169; }
+.tile-todo        .tile-count { color: #718096; }
+.tile-in-progress .tile-count { color: #d69e2e; }
+.tile-done        .tile-count { color: #38a169; }
+
+.tile-high   { border-left: 4px solid #e53e3e; }
+.tile-medium { border-left: 4px solid #d69e2e; }
+.tile-low    { border-left: 4px solid #38a169; }
+.tile-high   .tile-count { color: #e53e3e; }
+.tile-medium .tile-count { color: #d69e2e; }
+.tile-low    .tile-count { color: #38a169; }
+
+.dashboard-error {
+  color: #e53e3e;
+  padding: 16px;
+  background: #fff5f5;
+  border-radius: 8px;
+  border: 1px solid #feb2b2;
+}

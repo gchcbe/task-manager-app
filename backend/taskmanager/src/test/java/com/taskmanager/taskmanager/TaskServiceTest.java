@@ -10,9 +10,11 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.mockito.ArgumentCaptor;
@@ -178,5 +180,76 @@ class TaskServiceTest {
         taskService.updateTask(1L, updatedData);
 
         assertEquals(Task.Priority.HIGH, captor.getValue().getPriority());
+    }
+
+    // ── US-007: Dashboard ──
+
+    // AC9: getOverdueTasks returns only tasks past due date with non-DONE status
+    @Test
+    void getOverdueTasks_shouldReturnOnlyOverdueNonDoneTasks() {
+        Task overdueTask = new Task();
+        overdueTask.setTitle("Overdue Task");
+        overdueTask.setStatus(Task.TaskStatus.TODO);
+        overdueTask.setDueDate(LocalDate.now().minusDays(2));
+
+        when(taskRepository.findByDueDateBeforeAndStatusNot(
+                any(LocalDate.class), eq(Task.TaskStatus.DONE)))
+            .thenReturn(Arrays.asList(overdueTask));
+
+        List<Task> overdue = taskService.getOverdueTasks();
+
+        assertEquals(1, overdue.size());
+        assertNotEquals(Task.TaskStatus.DONE, overdue.get(0).getStatus());
+        assertTrue(overdue.get(0).getDueDate().isBefore(LocalDate.now()));
+    }
+
+    // AC10: getTaskCountByStatus returns correct counts per status
+    @Test
+    void getTaskCountByStatus_shouldReturnCorrectCountsPerStatus() {
+        Task todoTask1 = new Task();
+        todoTask1.setStatus(Task.TaskStatus.TODO);
+
+        Task todoTask2 = new Task();
+        todoTask2.setStatus(Task.TaskStatus.TODO);
+
+        Task inProgressTask = new Task();
+        inProgressTask.setStatus(Task.TaskStatus.IN_PROGRESS);
+
+        Task doneTask = new Task();
+        doneTask.setStatus(Task.TaskStatus.DONE);
+
+        when(taskRepository.findAll())
+            .thenReturn(Arrays.asList(todoTask1, todoTask2, inProgressTask, doneTask));
+
+        Map<String, Long> counts = taskService.getTaskCountByStatus();
+
+        assertEquals(2L, counts.get("TODO"));
+        assertEquals(1L, counts.get("IN_PROGRESS"));
+        assertEquals(1L, counts.get("DONE"));
+    }
+
+    // AC11: getTaskCountByPriority returns correct counts per priority
+    @Test
+    void getTaskCountByPriority_shouldReturnCorrectCountsPerPriority() {
+        Task highTask = new Task();
+        highTask.setPriority(Task.Priority.HIGH);
+
+        Task mediumTask1 = new Task();
+        mediumTask1.setPriority(Task.Priority.MEDIUM);
+
+        Task mediumTask2 = new Task();
+        mediumTask2.setPriority(Task.Priority.MEDIUM);
+
+        Task lowTask = new Task();
+        lowTask.setPriority(Task.Priority.LOW);
+
+        when(taskRepository.findAll())
+            .thenReturn(Arrays.asList(highTask, mediumTask1, mediumTask2, lowTask));
+
+        Map<String, Long> counts = taskService.getTaskCountByPriority();
+
+        assertEquals(1L, counts.get("HIGH"));
+        assertEquals(2L, counts.get("MEDIUM"));
+        assertEquals(1L, counts.get("LOW"));
     }
 }

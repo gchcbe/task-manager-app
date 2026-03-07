@@ -44,6 +44,11 @@ class TaskManagerSeleniumTest {
         driver.get(BASE_URL);
         wait.until(ExpectedConditions.presenceOfElementLocated(
             By.className("app-header")));
+        // App defaults to Dashboard view — navigate to Tasks so all existing tests
+        // start from a consistent state with task cards and filters visible.
+        navigateToTasksView();
+        wait.until(ExpectedConditions.presenceOfElementLocated(
+            By.className("status-filter")));
     }
 
     // ── US-001: View All Tasks ──
@@ -319,7 +324,112 @@ class TaskManagerSeleniumTest {
         System.out.println("PASS: Priority changed from MEDIUM to LOW, badge updated");
     }
 
+    // ── US-007: Dashboard ──
+
+    @Test
+    @Order(13)
+    void test13_dashboardShowsCorrectTotalTaskCount() {
+        // AC12: Dashboard shows correct total task count
+        navigateToTasksView();
+        try { Thread.sleep(500); } catch (InterruptedException e) { }
+        int taskCardCount = driver.findElements(By.className("task-card")).size();
+
+        navigateToDashboardView();
+
+        WebElement totalTile = driver.findElement(By.className("tile-total"));
+        int displayedTotal = Integer.parseInt(
+            totalTile.findElement(By.className("tile-count")).getText().trim());
+
+        assertEquals(taskCardCount, displayedTotal,
+            "Dashboard total count should match actual number of tasks");
+        System.out.println("PASS: Dashboard total count matches task list count (" + displayedTotal + ")");
+    }
+
+    @Test
+    @Order(14)
+    void test14_createTask_incrementsDashboardTotalCount() {
+        // AC13: Creating a task increments dashboard total count by 1
+        navigateToDashboardView();
+
+        WebElement totalTile = driver.findElement(By.className("tile-total"));
+        int initialTotal = Integer.parseInt(
+            totalTile.findElement(By.className("tile-count")).getText().trim());
+
+        navigateToTasksView();
+        createTask("Dashboard Count Test Task", "Should increment total");
+
+        navigateToDashboardView();
+
+        WebElement updatedTotalTile = driver.findElement(By.className("tile-total"));
+        int newTotal = Integer.parseInt(
+            updatedTotalTile.findElement(By.className("tile-count")).getText().trim());
+
+        assertEquals(initialTotal + 1, newTotal,
+            "Dashboard total count should increment by 1 after creating a task");
+        System.out.println("PASS: Total count incremented from " + initialTotal + " to " + newTotal);
+    }
+
+    @Test
+    @Order(15)
+    void test15_dashboardShowsValidOverdueTaskCount() {
+        // AC14: Dashboard overdue tile shows a valid non-negative count
+        navigateToDashboardView();
+
+        WebElement overdueTile = driver.findElement(By.className("tile-overdue"));
+        int overdueCount = Integer.parseInt(
+            overdueTile.findElement(By.className("tile-count")).getText().trim());
+
+        assertTrue(overdueCount >= 0,
+            "Overdue task count should be a non-negative integer");
+        System.out.println("PASS: Overdue count (" + overdueCount + ") is a valid non-negative number");
+    }
+
+    @Test
+    @Order(16)
+    void test16_clickStatusTile_navigatesToFilteredTaskList() {
+        // AC15: Clicking a status tile navigates to task list filtered by that status
+        navigateToDashboardView();
+
+        WebElement todoTile = driver.findElement(By.className("tile-todo"));
+        int expectedCount = Integer.parseInt(
+            todoTile.findElement(By.className("tile-count")).getText().trim());
+        todoTile.click();
+
+        wait.until(ExpectedConditions.presenceOfElementLocated(
+            By.cssSelector(".filter-btn.active")));
+
+        WebElement activeFilter = driver.findElement(By.cssSelector(".filter-btn.active"));
+        assertTrue(activeFilter.getText().contains("To Do"),
+            "Active filter should be To Do after clicking the To Do status tile");
+
+        int visibleCards = driver.findElements(By.className("task-card")).size();
+        assertEquals(expectedCount, visibleCards,
+            "Number of visible task cards should match the count shown on the To Do tile");
+        System.out.println("PASS: Clicking To Do tile navigated to filtered list with " + visibleCards + " tasks");
+    }
+
     // ── Helpers ──
+
+    private void navigateToTasksView() {
+        WebElement nav = driver.findElement(By.className("header-nav"));
+        for (WebElement btn : nav.findElements(By.tagName("button"))) {
+            if (btn.getText().contains("Tasks")) {
+                btn.click();
+                return;
+            }
+        }
+    }
+
+    private void navigateToDashboardView() {
+        WebElement nav = driver.findElement(By.className("header-nav"));
+        for (WebElement btn : nav.findElements(By.tagName("button"))) {
+            if (btn.getText().contains("Dashboard")) {
+                btn.click();
+                break;
+            }
+        }
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.className("dashboard")));
+    }
 
     private void clickNewTaskButton() {
         List<WebElement> buttons = driver.findElements(By.className("btn-primary"));

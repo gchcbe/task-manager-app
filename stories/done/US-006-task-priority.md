@@ -8,23 +8,23 @@ So that I can focus on the most important work first
 ## Acceptance Criteria
 
 ### Functional
-- [x] AC1: A priority field (High / Medium / Low) is available when creating a task
-- [x] AC2: A priority field is available when editing a task
-- [x] AC3: Priority defaults to Medium when not explicitly set
-- [x] AC4: Each task card displays the priority visually with a colour-coded badge
-- [x] AC5: High priority tasks show a red badge, Medium show amber, Low show green
-- [x] AC6: Priority is persisted to the database and survives app restart
-- [x] AC7: Existing tasks without a priority are treated as Medium by default
+- [ ] AC1: A priority field (High / Medium / Low) is available when creating a task
+- [ ] AC2: A priority field is available when editing a task
+- [ ] AC3: Priority defaults to Medium when not explicitly set
+- [ ] AC4: Each task card displays the priority visually with a colour-coded badge
+- [ ] AC5: High priority tasks show a red badge, Medium show amber, Low show green
+- [ ] AC6: Priority is persisted to the database and survives app restart
+- [ ] AC7: Existing tasks without a priority are treated as Medium by default
 
 ### Unit Tests
-- [x] AC8: TaskServiceTest - createTask with HIGH priority saves and returns correct priority
-- [x] AC9: TaskServiceTest - createTask with no priority defaults to MEDIUM
-- [x] AC10: TaskServiceTest - updateTask can change priority from LOW to HIGH
+- [ ] AC8: TaskServiceTest - createTask with HIGH priority saves and returns correct priority
+- [ ] AC9: TaskServiceTest - createTask with no priority defaults to MEDIUM
+- [ ] AC10: TaskServiceTest - updateTask can change priority from LOW to HIGH
 
 ### Selenium Tests
-- [x] AC11: Selenium creates a task with HIGH priority and verifies red badge appears on card
-- [x] AC12: Selenium creates a task with no priority and verifies MEDIUM badge appears
-- [x] AC13: Selenium edits a task and changes priority from MEDIUM to LOW, verifies badge updates
+- [ ] AC11: Selenium creates a task with HIGH priority and verifies red badge appears on card
+- [ ] AC12: Selenium creates a task with no priority and verifies MEDIUM badge appears
+- [ ] AC13: Selenium edits a task and changes priority from MEDIUM to LOW, verifies badge updates
 
 ## Technical Notes
 - Backend: Add priority enum (HIGH, MEDIUM, LOW) to Task entity with default MEDIUM
@@ -33,13 +33,13 @@ So that I can focus on the most important work first
 - Database: New priority column auto-added by Hibernate
 
 ## Definition of Done
-- [x] Code written and working
-- [x] Manually verified in UI
-- [x] Unit tests written and passing
-- [x] Selenium tests written and passing
-- [x] Committed and pushed to GitHub
+- [ ] Code written and working
+- [ ] Manually verified in UI
+- [ ] Unit tests written and passing
+- [ ] Selenium tests written and passing
+- [ ] Committed and pushed to GitHub
 
-## Status: Done
+## Status: Backlog
 
 ---
 

@@ -1,6 +1,7 @@
 package com.taskmanager.taskmanager.controller;
 
 import com.taskmanager.taskmanager.model.Task;
+import com.taskmanager.taskmanager.model.TaskSummary;
 import com.taskmanager.taskmanager.service.TaskService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -50,5 +51,10 @@ public class TaskController {
     public ResponseEntity<List<Task>> getTasksByStatus(
             @PathVariable Task.TaskStatus status) {
         return ResponseEntity.ok(taskService.getTasksByStatus(status));
+    }
+
+    @GetMapping("/summary")
+    public ResponseEntity<TaskSummary> getTaskSummary() {
+        return ResponseEntity.ok(taskService.getTaskSummary());
     }
 }

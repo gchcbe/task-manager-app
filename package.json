@@ -1,0 +1,13 @@
+{
+  "name": "task-manager-agent",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Agentic SDLC pipeline for Task Manager app",
+  "scripts": {
+    "agent": "node agent/orchestrator.js"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.78.0",
+    "dotenv": "^17.3.1"
+  }
+}

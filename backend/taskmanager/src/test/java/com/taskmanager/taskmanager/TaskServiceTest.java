@@ -15,6 +15,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+import org.mockito.ArgumentCaptor;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -125,5 +127,56 @@ class TaskServiceTest {
             .thenReturn(Collections.emptyList());
         List<Task> tasks = taskService.getTasksByStatus(Task.TaskStatus.DONE);
         assertTrue(tasks.isEmpty());
+    }
+
+    // ── US-006: Task Priority ──
+
+    // AC8: createTask with HIGH priority saves and returns correct priority
+    @Test
+    void createTask_withHighPriority_savesAndReturnsCorrectPriority() {
+        Task highPriorityTask = new Task();
+        highPriorityTask.setTitle("Urgent Task");
+        highPriorityTask.setPriority(Task.Priority.HIGH);
+
+        when(taskRepository.save(highPriorityTask)).thenReturn(highPriorityTask);
+
+        Task created = taskService.createTask(highPriorityTask);
+
+        assertEquals(Task.Priority.HIGH, created.getPriority());
+        verify(taskRepository, times(1)).save(highPriorityTask);
+    }
+
+    // AC9: createTask with no priority defaults to MEDIUM
+    @Test
+    void createTask_withNoPriority_defaultsToMedium() {
+        Task taskWithoutPriority = new Task();
+        taskWithoutPriority.setTitle("Task Without Priority");
+        // priority intentionally not set — should default to MEDIUM
+
+        when(taskRepository.save(taskWithoutPriority)).thenReturn(taskWithoutPriority);
+
+        Task created = taskService.createTask(taskWithoutPriority);
+
+        assertEquals(Task.Priority.MEDIUM, created.getPriority());
+    }
+
+    // AC10: updateTask can change priority from LOW to HIGH
+    @Test
+    void updateTask_canChangePriority_fromLowToHigh() {
+        sampleTask.setPriority(Task.Priority.LOW);
+
+        Task updatedData = new Task();
+        updatedData.setTitle(sampleTask.getTitle());
+        updatedData.setDescription(sampleTask.getDescription());
+        updatedData.setStatus(sampleTask.getStatus());
+        updatedData.setPriority(Task.Priority.HIGH);
+
+        ArgumentCaptor<Task> captor = ArgumentCaptor.forClass(Task.class);
+        when(taskRepository.findById(1L)).thenReturn(Optional.of(sampleTask));
+        when(taskRepository.save(captor.capture())).thenReturn(sampleTask);
+
+        taskService.updateTask(1L, updatedData);
+
+        assertEquals(Task.Priority.HIGH, captor.getValue().getPriority());
     }
 }

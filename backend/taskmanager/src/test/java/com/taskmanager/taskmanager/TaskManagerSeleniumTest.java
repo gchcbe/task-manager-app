@@ -6,6 +6,7 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
@@ -257,6 +258,67 @@ class TaskManagerSeleniumTest {
         System.out.println("PASS: All Tasks filter shows all tasks");
     }
 
+    // ── US-006: Task Priority ──
+
+    @Test
+    @Order(10)
+    void test10_createTaskWithHighPriority_showsRedBadge() {
+        // AC11: Creates a task with HIGH priority and verifies red badge appears on card
+        createTaskWithPriority("High Priority Task", "Urgent work", "HIGH");
+
+        List<WebElement> badges = driver.findElements(By.className("priority-badge"));
+        WebElement lastBadge = badges.get(badges.size() - 1);
+
+        assertTrue(lastBadge.getAttribute("class").contains("priority-high"),
+            "HIGH priority task should display a red badge (priority-high class)");
+        System.out.println("PASS: HIGH priority task shows red badge");
+    }
+
+    @Test
+    @Order(11)
+    void test11_createTaskWithNoPriority_showsMediumBadge() {
+        // AC12: Creates a task with no priority selected and verifies MEDIUM badge appears
+        createTask("Default Priority Task", "No priority set");
+
+        List<WebElement> badges = driver.findElements(By.className("priority-badge"));
+        WebElement lastBadge = badges.get(badges.size() - 1);
+
+        assertTrue(lastBadge.getAttribute("class").contains("priority-medium"),
+            "Task with no priority set should display an amber badge (priority-medium class)");
+        System.out.println("PASS: Task with no priority shows MEDIUM badge");
+    }
+
+    @Test
+    @Order(12)
+    void test12_editTask_changesPriorityMediumToLow_updatesBadge() {
+        // AC13: Edits a task and changes priority from MEDIUM to LOW, verifies badge updates
+        createTask("Priority Change Task", "Starts as medium");
+
+        // Open edit form for the last card
+        List<WebElement> editBtns = driver.findElements(By.className("btn-edit"));
+        editBtns.get(editBtns.size() - 1).click();
+
+        wait.until(ExpectedConditions.presenceOfElementLocated(
+            By.className("task-form")));
+
+        // Change priority from MEDIUM to LOW
+        Select prioritySelect = new Select(driver.findElement(By.id("priority")));
+        prioritySelect.selectByValue("LOW");
+
+        clickButtonByText("Update Task");
+
+        try { Thread.sleep(1000); } catch (InterruptedException e) { }
+        wait.until(ExpectedConditions.presenceOfElementLocated(
+            By.className("task-card")));
+
+        List<WebElement> badges = driver.findElements(By.className("priority-badge"));
+        WebElement lastBadge = badges.get(badges.size() - 1);
+
+        assertTrue(lastBadge.getAttribute("class").contains("priority-low"),
+            "After changing priority to LOW the badge should be green (priority-low class)");
+        System.out.println("PASS: Priority changed from MEDIUM to LOW, badge updated");
+    }
+
     // ── Helpers ──
 
     private void clickNewTaskButton() {
@@ -285,6 +347,19 @@ class TaskManagerSeleniumTest {
             By.className("task-form")));
         driver.findElement(By.id("title")).sendKeys(title);
         driver.findElement(By.id("description")).sendKeys(description);
+        clickButtonByText("Create Task");
+        wait.until(ExpectedConditions.presenceOfElementLocated(
+            By.className("task-card")));
+        try { Thread.sleep(500); } catch (InterruptedException e) { }
+    }
+
+    private void createTaskWithPriority(String title, String description, String priority) {
+        clickNewTaskButton();
+        wait.until(ExpectedConditions.presenceOfElementLocated(
+            By.className("task-form")));
+        driver.findElement(By.id("title")).sendKeys(title);
+        driver.findElement(By.id("description")).sendKeys(description);
+        new Select(driver.findElement(By.id("priority"))).selectByValue(priority);
         clickButtonByText("Create Task");
         wait.until(ExpectedConditions.presenceOfElementLocated(
             By.className("task-card")));

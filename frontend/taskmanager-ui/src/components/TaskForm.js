@@ -5,6 +5,7 @@ const TaskForm = ({ task, onSubmit, onCancel }) => {
     title: '',
     description: '',
     status: 'TODO',
+    priority: 'MEDIUM',
     dueDate: '',
   });
   const [errors, setErrors] = useState({});
@@ -15,6 +16,7 @@ const TaskForm = ({ task, onSubmit, onCancel }) => {
         title: task.title || '',
         description: task.description || '',
         status: task.status || 'TODO',
+        priority: task.priority || 'MEDIUM',
         dueDate: task.dueDate || '',
       });
     }
@@ -98,6 +100,20 @@ const TaskForm = ({ task, onSubmit, onCancel }) => {
                 <option value="TODO">⏳ To Do</option>
                 <option value="IN_PROGRESS">🔄 In Progress</option>
                 <option value="DONE">✅ Done</option>
+              </select>
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="priority">Priority</label>
+              <select
+                id="priority"
+                name="priority"
+                value={formData.priority}
+                onChange={handleChange}
+              >
+                <option value="HIGH">🔴 High</option>
+                <option value="MEDIUM">🟡 Medium</option>
+                <option value="LOW">🟢 Low</option>
               </select>
             </div>
 

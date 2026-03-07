@@ -1,5 +1,11 @@
 import React from 'react';
 
+const priorityConfig = {
+  HIGH:   { label: 'High',   className: 'priority-high' },
+  MEDIUM: { label: 'Medium', className: 'priority-medium' },
+  LOW:    { label: 'Low',    className: 'priority-low' },
+};
+
 const statusConfig = {
   TODO: { label: 'To Do', emoji: '⏳', className: 'status-todo' },
   IN_PROGRESS: { label: 'In Progress', emoji: '🔄', className: 'status-inprogress' },
@@ -8,6 +14,7 @@ const statusConfig = {
 
 const TaskCard = ({ task, onEdit, onDelete }) => {
   const status = statusConfig[task.status] || statusConfig.TODO;
+  const priority = priorityConfig[task.priority] || priorityConfig.MEDIUM;
 
   const formatDate = (dateStr) => {
     if (!dateStr) return null;
@@ -26,6 +33,9 @@ const TaskCard = ({ task, onEdit, onDelete }) => {
       <div className="task-card-header">
         <span className={`status-badge ${status.className}`}>
           {status.emoji} {status.label}
+        </span>
+        <span className={`priority-badge ${priority.className}`}>
+          {priority.label}
         </span>
         <div className="task-actions">
           <button className="btn btn-edit" onClick={() => onEdit(task)}>✏️ Edit</button>

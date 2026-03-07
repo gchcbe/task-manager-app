@@ -12,6 +12,7 @@
 #    --no-cache      Force Docker to rebuild images from scratch
 #    --start-only    Just start containers (no build)
 #    --stop          Stop and remove all containers
+#    --with-selenium Run Selenium tests after deployment
 #    --help          Show this help message
 # ══════════════════════════════════════════════════════════
 
@@ -34,6 +35,7 @@ SKIP_NPM_INSTALL=false
 NO_CACHE=false
 START_ONLY=false
 STOP_ONLY=false
+RUN_SELENIUM=false
 
 # ── Root directory (always run from project root) ──
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -74,6 +76,7 @@ print_help() {
   echo "  --no-cache       Force Docker to rebuild images from scratch"
   echo "  --start-only     Just start containers without building"
   echo "  --stop           Stop and remove all running containers"
+  echo "  --with-selenium  Run Selenium tests after deployment"
   echo "  --help           Show this help message"
   echo ""
   echo "Examples:"
@@ -82,6 +85,7 @@ print_help() {
   echo "  ./build.sh --backend-only   # Rebuild backend only"
   echo "  ./build.sh --no-cache       # Force fresh Docker build"
   echo "  ./build.sh --stop           # Stop everything"
+  echo "  ./build.sh --with-selenium  # Full build + run Selenium tests"
   echo ""
 }
 
@@ -120,6 +124,10 @@ else
     --stop)
       MODE="Stop All Containers"
       STOP_ONLY=true
+      ;;
+    --with-selenium)
+      MODE="Full Build + Selenium Tests"
+      RUN_SELENIUM=true
       ;;
     --help)
       print_help
@@ -213,3 +221,20 @@ echo -e "  🔧 Backend  : http://localhost:8080/api/tasks"
 echo -e "  🗄️  Database : localhost:5432"
 echo -e "${GREEN}══════════════════════════════════════════════════${NC}"
 echo ""
+
+# ── Selenium Tests (optional) ──
+if [ "$RUN_SELENIUM" = true ]; then
+  print_step "Waiting for app to be ready before running Selenium tests..."
+  sleep 15
+
+  print_step "Running Selenium tests..."
+  cd backend/taskmanager
+  if mvn test -Dtest=TaskManagerSeleniumTest 2>&1 | tee /tmp/selenium-results.log | grep -E "(Tests run|BUILD)"; then
+    print_success "All Selenium tests passed"
+  else
+    print_error "Selenium tests failed — see output above"
+    cd "$SCRIPT_DIR"
+    exit 1
+  fi
+  cd "$SCRIPT_DIR"
+fi

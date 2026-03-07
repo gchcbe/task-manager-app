@@ -25,3 +25,19 @@ So that [some reason/value]
 - [ ] Committed and pushed to GitHub
 
 ## Status: Backlog
+
+---
+
+## Defects Log
+
+| ID | AC | Found By | Description | Status | Fix Applied |
+|---|---|---|---|---|---|
+| | | | | | |
+
+---
+
+## Defects Log
+
+| ID | AC | Found By | Description | Status | Fix Applied |
+|---|---|---|---|---|---|
+| | | | | | |

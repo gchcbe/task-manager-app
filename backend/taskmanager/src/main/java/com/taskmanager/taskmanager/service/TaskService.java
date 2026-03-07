@@ -33,6 +33,7 @@ public class TaskService {
         existing.setDescription(updatedTask.getDescription());
         existing.setStatus(updatedTask.getStatus());
         existing.setDueDate(updatedTask.getDueDate());
+        existing.setPriority(updatedTask.getPriority());
         return taskRepository.save(existing);
     }
 

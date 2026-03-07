@@ -28,6 +28,10 @@ public class Task {
     @Column(nullable = false)
     private TaskStatus status = TaskStatus.TODO;
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, columnDefinition = "VARCHAR(255) DEFAULT 'MEDIUM'")
+    private Priority priority = Priority.MEDIUM;
+
     private LocalDate dueDate;
 
     @Column(updatable = false)
@@ -40,5 +44,9 @@ public class Task {
 
     public enum TaskStatus {
         TODO, IN_PROGRESS, DONE
+    }
+
+    public enum Priority {
+        HIGH, MEDIUM, LOW
     }
 }
